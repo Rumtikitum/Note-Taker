@@ -10,6 +10,22 @@ app.use(express.static("./Develop/public"))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+//Read and Write
+fs.readFile("db/db.json","utf8", (err, data) => {
+    if (err) throw err;
+    var notes = JSON.parse(data);
+
+    function writeNote() {
+        fs.writeFile("db/db.json",JSON.stringify(notes,'\t'),err => {
+            if (err) throw err;
+            return true;
+        });
+    }
+
+}
+
+
+
 //GET, POST DELETE
 
 app.get("/api/notes", function(req, res) {
