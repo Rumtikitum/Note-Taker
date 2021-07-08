@@ -10,10 +10,21 @@ app.use(express.static("./Develop/public"))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+//GET, POST DELETE
+
+app.get("/api/notes", function(req, res) {
+
+}); 
 
 
+app.post("/api/notes", function(req, res) {
+
+});
 
 
+app.delete("/api/notes/:id", function(req, res) {
+
+})
 
 
 //set up routes...connecting to html files
