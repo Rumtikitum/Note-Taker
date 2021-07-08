@@ -11,35 +11,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //Read and Write
-fs.readFile("db/db.json","utf8", (err, data) => {
-    if (err) throw err;
-    var notes = JSON.parse(data);
-
-    function writeNote() {
-        fs.writeFile("db/db.json",JSON.stringify(notes,'\t'),err => {
-            if (err) throw err;
-            return true;
-        });
-    }
-
-}
-
-
-
-//GET, POST DELETE
-
-app.get("/api/notes", function(req, res) {
-
-}); 
-
-
-app.post("/api/notes", function(req, res) {
-
-});
-
-
-app.delete("/api/notes/:id", function(req, res) {
-
+router.get("/notes", function(req, res){
+    notes.getNotes()
+    .then(notes => res.json(notes))
+    .catch(err => res.status(500).json(err));
+})
+router.post("/notes", function(req, res){
+    notes.addNotes(req.body)
+    .then(notes => res.json(notes))
+    .catch(err => res.status(500).json(err));
+})
+router.delete("/notes/:id", function(req, res){
+    notes.removeNote(req.params.id)
+    .then(() => res.json({ok: true}))
+    .catch(err => res.status(500).json(err));
 })
 
 
