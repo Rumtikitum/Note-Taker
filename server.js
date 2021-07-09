@@ -43,7 +43,7 @@ app.post("/api/notes", function(req, res) {
   });
 
 
-//Delete...sorta...
+//remove note from json
 app.delete("/api/notes/:id", function(req, res) {
     const deleteId = parseInt(req.params.id);
     read("./develop/db/db.json", "utf8")
@@ -64,9 +64,8 @@ app.delete("/api/notes/:id", function(req, res) {
 //-----------------------------------------------------------------------------------
 
   
-//Server showing public folder files...front end
+//Server showing public folder files...front end...lets css elements work on page
 app.use(express.static("./Develop/public"))
-
 
 //set up routes...loops user when they attempt to go anywhere else on the 5000 aside from notes
 app.get("/notes", function(req, res) {
