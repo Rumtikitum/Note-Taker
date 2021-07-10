@@ -1,11 +1,11 @@
 //creating a server============================================================================
 const express = require('express');
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.listen(PORT, () => {
-    console.log(`App listening on PORT ${PORT}` || 5000);
+    console.log(`App listening on PORT ${PORT}`);
   });
 
 const path = require('path');
