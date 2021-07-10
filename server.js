@@ -9,7 +9,6 @@ app.listen(PORT, () => {
   });
 
 const path = require('path');
-
 //required to write and create promise===========================================================
 const fs = require('fs');
 const promise = require('util').promisify;
@@ -35,15 +34,15 @@ app.use(express.static("./Develop/public"))
 
 //set up routes...loops user when they attempt to go anywhere else on the 5000 aside from notes
 app.get("/notes", function(req, res) {
-  res.sendFile(path.join(__dirname,"./Develop/public/notes.html"));
+  res.sendFile(path.join(__dirname,"../miniature-eureka-main../Develop/public/notes.html"));
 });
 
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname,"./Develop/public/index.html"));
+  res.sendFile(path.join(__dirname,"../miniature-eureka-main../Develop/public/index.html"));
 });
 
 app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname,"./Develop/public/index.html"));
+  res.sendFile(path.join(__dirname,"../miniature-eureka-main../Develop/public/index.html"));
 });
 
 //Post and Delete===========================================================================================
