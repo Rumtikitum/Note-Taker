@@ -1,4 +1,4 @@
-//creating a server
+//creating a server============================================================================
 const express = require('express');
 const app = express();
 const PORT = 5000;
@@ -10,14 +10,16 @@ app.listen(PORT, () => {
 
 const path = require('path');
 
-//required to write and create promise 
+//required to write and create promise===========================================================
 const fs = require('fs');
 const promise = require('util').promisify;
 const read = promise(fs.readFile);
 const write = promise(fs.writeFile);
 
-//--------------------------------------------------------------------------
-//Get!!
+
+
+//============================================================================================
+//Get!! JSON...TEST TITLE and TEST TEXT
 app.get("/api/notes", function(req, res) {
     read("./develop/db/db.json", "utf8")
     .then(function(data) {
@@ -25,8 +27,26 @@ app.get("/api/notes", function(req, res) {
         res.json(notes);
       })
   }); 
-  
-  
+
+//=============================================================================================
+
+//Server showing public folder files...front end...lets css elements work on page. Must be called before paths
+app.use(express.static("./Develop/public"))
+
+//set up routes...loops user when they attempt to go anywhere else on the 5000 aside from notes
+app.get("/notes", function(req, res) {
+  res.sendFile(path.join(__dirname,"./Develop/public/notes.html"));
+});
+
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname,"./Develop/public/index.html"));
+});
+
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname,"./Develop/public/index.html"));
+});
+
+//Post and Delete===========================================================================================
 //Post!!!
 app.post("/api/notes", function(req, res) {
     const note = req.body;
@@ -43,7 +63,7 @@ app.post("/api/notes", function(req, res) {
   });
 
 
-//remove note from json
+//Delete...Replace with everything but the identified ID
 app.delete("/api/notes/:id", function(req, res) {
     const deleteId = parseInt(req.params.id);
     read("./develop/db/db.json", "utf8")
@@ -61,21 +81,8 @@ app.delete("/api/notes/:id", function(req, res) {
       res.send('rewrite');
     })
   })
-//-----------------------------------------------------------------------------------
+//================================================================================
 
   
-//Server showing public folder files...front end...lets css elements work on page
-app.use(express.static("./Develop/public"))
 
-//set up routes...loops user when they attempt to go anywhere else on the 5000 aside from notes
-app.get("/notes", function(req, res) {
-    res.sendFile(path.join(__dirname,"./Develop/public/notes.html"));
-});
 
-app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname,"./Develop/public/index.html"));
-});
-
-app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname,"./Develop/public/index.html"));
-});
