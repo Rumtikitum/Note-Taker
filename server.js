@@ -20,7 +20,7 @@ const write = promise(fs.writeFile);
 //============================================================================================
 //Get!! JSON...TEST TITLE and TEST TEXT
 app.get("/api/notes", function(req, res) {
-    read("./develop/db/db.json", "utf8")
+    read("./Develop/db/db.json", "utf8")
     .then(function(data) {
         notes = [].concat(JSON.parse(data))
         res.json(notes);
@@ -34,29 +34,29 @@ app.use(express.static("./Develop/public"))
 
 //set up routes...loops user when they attempt to go anywhere else on the 5000 aside from notes
 app.get("/notes", function(req, res) {
-  res.sendFile(path.join(__dirname,"../../miniature-eureka-main/Develop/public/notes.html"));
+  res.sendFile(path.join(__dirname,"../miniature-eureka-main/Develop/public/notes.html"));
 });
 
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname,"../../miniature-eureka-main/Develop/public/index.html"));
+  res.sendFile(path.join(__dirname,"../miniature-eureka-main/Develop/public/index.html"));
 });
 
 app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname,"../../miniature-eureka-main/Develop/public/index.html"));
+  res.sendFile(path.join(__dirname,"../miniature-eureka-main/Develop/public/index.html"));
 });
 
 //Post and Delete===========================================================================================
 //Post!!!
 app.post("/api/notes", function(req, res) {
     const note = req.body;
-    read("./develop/db/db.json", "utf8")
+    read("./Develop/db/db.json", "utf8")
     .then(function(data) {
         const notes = [].concat(JSON.parse(data));
         note.id = notes.length + 1
         notes.push(note);
         return notes
     }).then(function(notes) {
-        write("./develop/db/db.json", JSON.stringify(notes))
+        write("./Develop/db/db.json", JSON.stringify(notes))
         res.json(note);
     })
   });
@@ -65,7 +65,7 @@ app.post("/api/notes", function(req, res) {
 //Delete...Replace with everything but the identified ID
 app.delete("/api/notes/:id", function(req, res) {
     const deleteId = parseInt(req.params.id);
-    read("./develop/db/db.json", "utf8")
+    read("./Develop/db/db.json", "utf8")
     .then(function(data) {
       const notes = [].concat(JSON.parse(data));
       const replacement = []
@@ -76,7 +76,7 @@ app.delete("/api/notes/:id", function(req, res) {
       }
       return replacement
     }).then(function(notes) {
-      write("./develop/db/db.json", JSON.stringify(notes))
+      write("./Develop/db/db.json", JSON.stringify(notes))
       res.send('rewrite');
     })
   })
